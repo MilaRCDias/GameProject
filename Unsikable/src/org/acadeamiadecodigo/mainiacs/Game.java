@@ -2,8 +2,6 @@ package org.acadeamiadecodigo.mainiacs;
 
 import org.acadeamiadecodigo.mainiacs.Elements.*;
 import org.academiadecodigo.simplegraphics.graphics.*;
-import org.academiadecodigo.simplegraphics.keyboard.KeyboardEvent;
-import org.academiadecodigo.simplegraphics.keyboard.KeyboardHandler;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
 
 
@@ -49,7 +47,7 @@ public class Game {
     }
 
 
-    public static void showScore(){
+    public static void scoreMore(){
         text = new Text(347, 35,"Score : " + score);
         score++;
         Rectangle rectangle = new Rectangle(324,20,65,40);
@@ -61,7 +59,7 @@ public class Game {
         text.setColor(Color.BLUE);
     }
 
-    public static void showScoreLess(){
+    public static void scoreLess(){
         text = new Text(347, 35,"Score : " + score);
         score--;
         Rectangle rectangle = new Rectangle(324,20,65,40);
@@ -88,7 +86,7 @@ public class Game {
         ship = new Ship();
         ship.init();
 
-        showScore();
+        scoreMore();
 
 
 
@@ -145,11 +143,11 @@ public class Game {
                 //System.out.println("crush here" + e.getPicture() + ship.getPicture());
 
                 if (e instanceof Shipwrecked) {
-                    showScore();
+                    scoreMore();
                     e.getPicture().delete();
 
                 } else if (e instanceof Door) {
-                        showScoreLess();
+                        scoreLess();
                         e.getPicture().delete();
 
                     } else {
