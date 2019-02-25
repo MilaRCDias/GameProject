@@ -146,7 +146,7 @@ public class Game {
                     scoreMore();
                     e.getPicture().delete();
 
-                } else if (e instanceof Door) {
+                } else if (e instanceof Shark) {
                         scoreLess();
                         e.getPicture().delete();
 

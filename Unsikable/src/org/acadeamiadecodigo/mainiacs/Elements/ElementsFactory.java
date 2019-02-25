@@ -35,8 +35,8 @@ public class ElementsFactory {
             case SHIPWRECKED:
                 element = new Shipwrecked();
                 break;
-            case DOOR:
-                element = new Door();
+            case SHARK:
+                element = new Shark();
                 break;
             default: element = new Shipwrecked();
         }
