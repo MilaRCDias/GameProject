@@ -7,15 +7,8 @@ import org.academiadecodigo.simplegraphics.pictures.Picture;
 
 public class Game {
 
-    /**
-     * PADDING & CELL DIMENSIONS
-     */
     public static int PADDING = 10;
     private static int PIXELCELL = 10;
-
-    /**
-     * Window Game Size
-     */
     private static int height = 600;
     private static int width = 600;
 
@@ -26,7 +19,7 @@ public class Game {
 
     private static Ship ship;
 
-    private static boolean gameOver;
+    private boolean gameOver;
 
     private Picture over = new Picture(0 + PADDING,0 + PADDING, "resources/Game_Over.png");
 
@@ -46,34 +39,28 @@ public class Game {
         return PADDING;
     }
 
-
-    public static void scoreMore(){
+    public void showScore() {
         text = new Text(347, 35,"Score : " + score);
+        Rectangle rectangle = new Rectangle(324,20,65,40);
+        rectangle.fill();
+        rectangle.setColor(Color.WHITE);
+        text.draw();
+        text.grow(20,15);
+        text.setColor(Color.BLUE);
+    }
+
+
+    public void scoreMore(){
         score++;
-        Rectangle rectangle = new Rectangle(324,20,65,40);
-        rectangle.fill();
-        rectangle.setColor(Color.WHITE);
-
-        text.draw();
-        text.grow(20,15);
-        text.setColor(Color.BLUE);
+        showScore();
     }
 
-    public static void scoreLess(){
-        text = new Text(347, 35,"Score : " + score);
+    public void scoreLess(){
         score--;
-        Rectangle rectangle = new Rectangle(324,20,65,40);
-        rectangle.fill();
-        rectangle.setColor(Color.WHITE);
+        showScore();
 
-        text.draw();
-        text.grow(20,15);
-        text.setColor(Color.BLUE);
     }
 
-    /**
-     * Ship Moving
-     */
     public void init() throws InterruptedException {
 
 
@@ -86,40 +73,25 @@ public class Game {
         ship = new Ship();
         ship.init();
 
-        scoreMore();
-
-
+        showScore();
 
         elements = new Elements[2000];
 
 
             for (int i = 0; i < elements.length; i++) {
 
-                while (gameOver == false)  {
+                while (!gameOver)  {
 
                 elements[i] = ElementsFactory.getNewElement();
-                System.out.println(elements[i]);
                 elements[i].move();
-                //checkCollision();
-
-
-                //System.out.println("this is the for element " + elements[i]);
 
             }
 
-            over.draw();  //game over background pic
-
+            over.draw();
         }
-
-
-
     }
 
-
-    /**
-     * Collision
-     */
-    public static void checkCollision() {
+    public void checkCollision() {
 
         for (Elements e : elements) {
 
@@ -127,20 +99,12 @@ public class Game {
                 continue;
             }
 
-            /*
-            System.out.println(e.getPicture().getY() + " this is the e y");
-            System.out.println(e.getPicture().getX() + " this is the e x");
-            System.out.println(ship.getPicture().getY() + " this is the ship y");
-            System.out.println(ship.getPicture().getX() + " this is the ship x");
-            */
-
             int posEY = e.getPicture().getY();
             int posSY = ship.getPicture().getY();
             int posEX = e.getPicture().getX();
             int posSX = ship.getPicture().getX();
 
             if(posEX+36 > posSX && posEX < posSX+36 && posEY+36 > posSY && posEY < posSY+36) {
-                //System.out.println("crush here" + e.getPicture() + ship.getPicture());
 
                 if (e instanceof Shipwrecked) {
                     scoreMore();
@@ -154,6 +118,7 @@ public class Game {
                     e.getPicture().delete();
                     ship.getPicture().delete();
                     gameOver = true;
+
                 }
             }
         }
