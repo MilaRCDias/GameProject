@@ -11,14 +11,11 @@ public class Game {
     private static int PIXELCELL = 10;
     private static int height = 600;
     private static int width = 600;
-
     private Picture background;
     private static Elements[] elements;
     private static Text text;
     private static int score = 0;
-
     private static Ship ship;
-
     private boolean gameOver;
 
     private Picture over = new Picture(0 + PADDING,0 + PADDING, "resources/Game_Over.png");
@@ -49,7 +46,6 @@ public class Game {
         text.setColor(Color.BLUE);
     }
 
-
     public void scoreMore(){
         score++;
         showScore();
@@ -58,12 +54,9 @@ public class Game {
     public void scoreLess(){
         score--;
         showScore();
-
     }
 
     public void init() throws InterruptedException {
-
-
         background = new Picture(0 + PADDING, 0 + PADDING, "resources/sea.png");
         background.draw();
 
@@ -72,53 +65,43 @@ public class Game {
 
         ship = new Ship();
         ship.init();
-
         showScore();
-
         elements = new Elements[2000];
-
-
+        
             for (int i = 0; i < elements.length; i++) {
-
                 while (!gameOver)  {
-
                 elements[i] = ElementsFactory.getNewElement();
                 elements[i].move();
-
             }
-
             over.draw();
         }
     }
 
     public void checkCollision() {
 
-        for (Elements e : elements) {
-
-            if (e == null) {
+        for (Elements elements : elements) {
+            if (elements == null) {
                 continue;
             }
-
-            int posEY = e.getPicture().getY();
+            int posEY = elements.getPicture().getY();
             int posSY = ship.getPicture().getY();
-            int posEX = e.getPicture().getX();
+            int posEX = elements.getPicture().getX();
             int posSX = ship.getPicture().getX();
 
             if(posEX+36 > posSX && posEX < posSX+36 && posEY+36 > posSY && posEY < posSY+36) {
 
-                if (e instanceof Shipwrecked) {
+                if (elements instanceof Shipwrecked) {
                     scoreMore();
-                    e.getPicture().delete();
+                    elements.getPicture().delete();
 
-                } else if (e instanceof Shark) {
+                } else if (elements instanceof Shark) {
                         scoreLess();
-                        e.getPicture().delete();
+                        elements.getPicture().delete();
 
                     } else {
-                    e.getPicture().delete();
+                    elements.getPicture().delete();
                     ship.getPicture().delete();
                     gameOver = true;
-
                 }
             }
         }
